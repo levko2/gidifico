@@ -9,9 +9,10 @@ import android.os.Build;
 import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -45,10 +46,14 @@ public class Utils {
         return writer.toString();
     }
 
-    void writeToJsonFile(Resources resources, int id) {
-        String MY_FILE_NAME = "mytextfile.txt";
-// Create a new output file stream
-        FileOutputStream fileos = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
+    public static void writeToFile(String data, Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("local.json", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
     }
 
     public static boolean isConnectingToInternet(Context context) {

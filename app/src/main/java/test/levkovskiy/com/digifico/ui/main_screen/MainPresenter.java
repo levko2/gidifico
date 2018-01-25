@@ -53,6 +53,7 @@ public class MainPresenter implements MainContract.Present {
                         List<NewsModel> list = gson.fromJson(server, new TypeToken<List<NewsModel>>() {
                         }.getType());
                         mView.collectData(list);
+                        Utils.writeToFile(gson.toJson(list), context);
                     }
                 });
     }

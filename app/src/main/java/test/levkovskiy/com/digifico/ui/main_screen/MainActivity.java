@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mPresenter = new MainPresenter(this);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         adapter = new Adapter();
-        binding.rvAnimals.setAdapter(adapter);
+        binding.rvNews.setAdapter(adapter);
         mPresenter.getLocalData(this);
         mPresenter.getServerData(this);
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void collectData(List<NewsModel> newsList) {
-        adapter.addAll(newsList);
+        adapter.addAllAndSort(newsList);
 
 
     }

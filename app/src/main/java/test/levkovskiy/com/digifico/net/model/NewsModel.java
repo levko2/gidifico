@@ -2,6 +2,7 @@ package test.levkovskiy.com.digifico.net.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 public class NewsModel implements Parcelable {
 
@@ -76,5 +77,7 @@ public class NewsModel implements Parcelable {
         dest.writeString(type);
         dest.writeString(content);
     }
+
+
 }
 

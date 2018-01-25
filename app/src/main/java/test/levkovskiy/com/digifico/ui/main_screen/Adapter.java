@@ -16,29 +16,29 @@ import test.levkovskiy.com.digifico.databinding.ItemListBinding;
 import test.levkovskiy.com.digifico.net.model.NewsModel;
 import test.levkovskiy.com.digifico.ui.details.DetailsActivity;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.AnimalViewHolder> {
-    private List<NewsModel> animals;
+public class Adapter extends RecyclerView.Adapter<Adapter.NewsViewHolder> {
+    private List<NewsModel> news;
 
     Adapter() {
 
-        this.animals = new ArrayList<>();
+        this.news = new ArrayList<>();
 
     }
 
     NewsModel getItem(int pos) {
-        return animals.get(pos);
+        return news.get(pos);
     }
 
     @Override
-    public AnimalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ItemListBinding binding = ItemListBinding.inflate(inflater, parent, false);
-        return new AnimalViewHolder(binding.getRoot());
+        return new NewsViewHolder(binding.getRoot());
     }
 
     @Override
-    public void onBindViewHolder(AnimalViewHolder holder, int position) {
-        NewsModel movie = animals.get(position);
+    public void onBindViewHolder(NewsViewHolder holder, int position) {
+        NewsModel movie = news.get(position);
         holder.binding.setNews(movie);
 
         holder.binding.getRoot().setOnClickListener(v -> {
@@ -51,22 +51,25 @@ public class Adapter extends RecyclerView.Adapter<Adapter.AnimalViewHolder> {
 
     @Override
     public int getItemCount() {
-        return animals.size();
+        return news.size();
     }
 
-    void addAll(List<NewsModel> animalModelWebResponse) {
-        animals.addAll(animalModelWebResponse);
+    void addAllAndSort(List<NewsModel> newsModels) {
+        for (NewsModel model : newsModels) {
+            if (!news.contains(model))
+                news.add(model);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            animals.sort((o1, o2) -> Integer.compare(o2.getId(), o1.getId()));
+            news.sort((o1, o2) -> Integer.compare(o2.getId(), o1.getId()));
         else
-            Collections.sort(animals, (o1, o2) -> Integer.compare(o2.getId(), o1.getId()));
+            Collections.sort(news, (o1, o2) -> Integer.compare(o2.getId(), o1.getId()));
         notifyDataSetChanged();
     }
 
-    static class AnimalViewHolder extends RecyclerView.ViewHolder {
+    static class NewsViewHolder extends RecyclerView.ViewHolder {
         ItemListBinding binding;
 
-        AnimalViewHolder(View v) {
+        NewsViewHolder(View v) {
             super(v);
             binding = DataBindingUtil.bind(v);
         }
